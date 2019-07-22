@@ -1,9 +1,11 @@
 const fs = require('fs');
+const os = require('os');
 
-const now = new Date();
+const now = new Date().toISOString().replace(/[Z]/,'').replace(/[T]/,'_').replace(/:/ig, '-').slice(0,19)
 
-console.log(`Запуск: ${now}`);
+let user = os.userInfo();
+user = JSON.stringify(user);
 
-fs.appendFile('./date/launch.logs', `Запуск: ${now}\n`, function(error) {
-    if (error) throw error;
+fs.appendFile(`./logs/log-${now}.log`, user, function(err) {
+    if (err) throw err;
 });
